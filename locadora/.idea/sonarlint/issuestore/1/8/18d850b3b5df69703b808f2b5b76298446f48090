@@ -1,0 +1,12 @@
+
+`	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(‚ëô¡şÿÿÿÿ
+‡
+java:S1130"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(‚ëô¡şÿÿÿÿ
+j
+java:S1192;"ODefine a constant instead of duplicating this literal "Homem Aranha 2" 3 times.(öâ®°ıÿÿÿÿ
+z
+java:S1192"dDefine a constant instead of duplicating this literal "You earned 1 frequent renter points" 5 times.(£Ç»ø
+k
+java:S1192+"PDefine a constant instead of duplicating this literal "Procurando Nemo" 3 times.(€Öıøÿÿÿÿ
+d
+java:S1192"NDefine a constant instead of duplicating this literal "Indiana Jones" 3 times.(Óúô

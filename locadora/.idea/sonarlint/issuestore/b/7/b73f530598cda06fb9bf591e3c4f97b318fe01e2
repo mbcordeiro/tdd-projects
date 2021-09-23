@@ -1,0 +1,9 @@
+
+Z	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(æ¿Új
+f	java:S116"QRename this field "_title" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿö‘ä
+O
+java:S5993"9Change the visibility of this constructor to "protected".(â°Ü¿
+O
+java:S3400!"9Remove this method and declare a constant for this value.(È¸å
+G
+java:S1172 "1Remove this unused method parameter "daysRented".(»Â¨ó
