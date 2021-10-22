@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GeradorDeNotaFiscalTest {
 //    @Test
@@ -32,8 +34,8 @@ public class GeradorDeNotaFiscalTest {
 
     @Test
     public void deveInvocarAcoesPosteriores() {
-        AcaoAposGerarNota acao1 = Mockito.mock(AcaoAposGerarNota.class);
-        AcaoAposGerarNota acao2 = Mockito.mock(AcaoAposGerarNota.class);
+        AcaoAposGerarNota acao1 = mock(AcaoAposGerarNota.class);
+        AcaoAposGerarNota acao2 = mock(AcaoAposGerarNota.class);
         List<AcaoAposGerarNota> acoes = Arrays.asList(acao1, acao2);
         GeradorDeNotaFiscal gerador = new GeradorDeNotaFiscal(acoes);
         Pedido pedido = new Pedido("Mauricio", 1000, 1);
@@ -45,10 +47,10 @@ public class GeradorDeNotaFiscalTest {
     @Test
     public void deveConsultarATabelaParaCalcularValor() {
         // mockando uma tabela, que ainda nem existe
-        Tabela tabela = Mockito.mock(Tabela.class);
+        Tabela tabela = mock(Tabela.class);
         // definindo o futuro comportamento "paraValor",
         // que deve retornar 0.2 caso o valor seja 1000.0
-        Mockito.when(tabela.paraValor(1000.0)).thenReturn(0.2);
+        when(tabela.paraValor(1000.0)).thenReturn(0.2);
         List<AcaoAposGerarNota> nenhumaAcao = Collections.emptyList();
         GeradorDeNotaFiscal gerador = new GeradorDeNotaFiscal(nenhumaAcao, tabela);
         Pedido pedido = new Pedido("Mauricio", 1000, 1);
@@ -58,5 +60,15 @@ public class GeradorDeNotaFiscalTest {
         assertEquals(1000 * 0.2, nf.getValor(), 0.00001);
     }
 
-
+    @Test
+    public void deveCalcularImpostoParaPedidosSuperioresA2000Reais() {
+        TabelaDePrecos tabela = mock(TabelaDePrecos.class);
+        // ensinando o mock a devolver 1 caso o método
+        // pegaParaValor seja invocado com o valor 2500.0
+        when(tabela.pegaParaValor(2500.0)).thenReturn(0.1);
+        Pedido pedido = new Pedido(2500.0);
+        CalculadoraDeImposto calculadora = new CalculadoraDeImposto(tabela);
+        double valor = calculadora.calculaImposto(pedido);
+        assertEquals(2500 * 0.1, valor, 0.00001);
+    }
 }

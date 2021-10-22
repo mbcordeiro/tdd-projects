@@ -12,6 +12,9 @@ public class Pedido {
         this.quantidadeItens = quantidadeItens;
     }
 
+    public Pedido(double v) {
+    }
+
     public String getCliente() {
         return cliente;
     }
@@ -22,5 +25,9 @@ public class Pedido {
 
     public int getQuantidadeItens() {
         return quantidadeItens;
+    }
+
+    public double getValor() {
+        return 0;
     }
 }
