@@ -17,12 +17,12 @@ public class LeilaoDao {
 	private final EntityManager em;
 
 	@Autowired
-	public LeilaoDao(EntityManager entityManager, EntityManager em) {
+	public LeilaoDao(EntityManager em) {
 		this.em = em;
 	}
 
-	public void salvar(Leilao leilao) {
-		em.merge(leilao);
+	public Leilao salvar(Leilao leilao) {
+		return em.merge(leilao);
 	}
 
 	public Leilao buscarPorId(Long id) {
