@@ -1,5 +1,7 @@
 package br.com.alura.leilao.dao;
 
+import br.com.alura.leilao.buiilder.LeilaoBuilder;
+import br.com.alura.leilao.buiilder.UsuarioBuilder;
 import br.com.alura.leilao.model.Leilao;
 import br.com.alura.leilao.model.Usuario;
 import br.com.alura.leilao.util.JPAUtil;
@@ -31,8 +33,20 @@ public class LeilaoDaoTest {
 
     @Test
     void deveriaCadastrarUmLeilao() {
-        Usuario usuario = criarUsuario();
-        Leilao leilao = criarLeilao(usuario);
+        Usuario usuario = new UsuarioBuilder()
+                .comNome("Fulano")
+                .comEmail("fulano@email.com")
+                .comSenha("1234678")
+                .criar();
+
+        em.persist(usuario);
+
+        Leilao leilao = new LeilaoBuilder()
+                .comNome("Mochila")
+                .comValorInicial("500")
+                .comData(LocalDate.now())
+                .comUsuario(usuario)
+                .criar();
 
         Leilao salvo = dao.buscarPorId(leilao.getId());
         Assertions.assertNotNull(salvo);
@@ -40,8 +54,22 @@ public class LeilaoDaoTest {
 
     @Test
     void deveriaAtualizarUmLeilao() {
-        Usuario usuario = criarUsuario();
-        Leilao leilao = criarLeilao(usuario);
+        Usuario usuario = new UsuarioBuilder()
+                .comNome("Fulano")
+                .comEmail("fulano@email.com")
+                .comSenha("1234678")
+                .criar();
+
+        em.persist(usuario);
+
+        Leilao leilao = new LeilaoBuilder()
+                .comNome("Mochila")
+                .comValorInicial("500")
+                .comData(LocalDate.now())
+                .comUsuario(usuario)
+                .criar();
+
+        leilao = dao.salvar(leilao);
 
         leilao.setNome("Smartphone");
         leilao.setValorInicial(new BigDecimal("1000"));
@@ -53,16 +81,5 @@ public class LeilaoDaoTest {
         Assertions.assertEquals("Smartphone", salvo.getNome());
         Assertions.assertEquals(new BigDecimal("1000"), salvo.getValorInicial());
 
-    }
-
-    private Usuario criarUsuario() {
-        final Usuario usuario = new Usuario("fulano", "fulano@email.com", "12345678");
-        em.persist(usuario);
-        return usuario;
-    }
-
-    private Leilao criarLeilao(Usuario usuario) {
-        Leilao leilao = new Leilao("Notebook", new BigDecimal("2000"), LocalDate.now(), usuario);
-        return dao.salvar(leilao);
     }
 }
